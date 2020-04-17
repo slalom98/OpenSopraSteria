@@ -92,7 +92,7 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
                                 </br>
 
 
-                                  <h6> Votre emplacement : </h6>
+                                  <h6> Votre emplacement :  </h6>
 
                                   <select onChange="getSelected(this);" name="libelleemplacement">
                                     <?php
