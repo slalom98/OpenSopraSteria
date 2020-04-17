@@ -1,0 +1,293 @@
+body {/* design de toute la page */
+         color : black;
+         background-color : #EDEDED;
+         font-family : sans-serif;
+         position:relative;
+       }
+
+h1 {/* concerne uniquement le titre */
+    font-family: inherit;
+    text-align: center;
+    font-weight: 1500;
+    color: black;
+}
+h2 { text-align: center;
+    font-weight: 400;
+    font-size: 23;
+    color : black;
+    font : bold;
+}
+
+h3 { font-size 10px;}
+
+
+.block2diapo {
+   position :absolute;
+   top : 23%;
+   left : 27%;
+}
+
+.block3 {
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 13;
+    background-color : #B86116;
+
+
+}
+
+nav #menu {
+    margin-left: auto;
+    margin-right: auto;
+    list-style-type: none;
+    vertical-align: middle;
+}
+
+nav li {/* aligner le menu*/
+    display : inline-block;
+    margin: auto;
+    padding : 0px;
+    width : 160px;
+    height : 42px;
+    border-right : 1px solid #CCCCCCCC;
+    line-height : 50px;
+}
+nav li a {
+    display : block;
+    text-decoration: none;
+    color : white;
+    text-align: center;
+}
+nav li :hover{
+    background-color : #EB9B57;}
+
+
+.styled {
+        border: 0;
+       margin-top: 0px;
+       float: right ;
+        line-height: 2.5;
+        padding: 0 20px;
+        font-size: 1rem;
+        text-align: center;
+        color: #fff;
+        text-shadow: 1px 1px 1px #000;
+        border-radius: 10px;
+        background-color: #CCD6D6;
+        background-image: linear-gradient(to top left,
+                                          rgba(10, 10, 10, .2),
+                                          rgba(0, 0, 0, .2) 30%,
+                                          rgba(0, 0, 0, 0));
+        box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                    inset -2px -2px 3px rgba(0, 0, 0, .6);
+    }
+
+    .styled:hover {
+        background-color: #DDDDDD;
+}
+
+.button {
+    padding-left: 90px;
+}
+
+button {
+    margin-left: .5em;
+}
+/*fin du menuuuuuuuuuuuu*/
+
+.block4 {background-color: #EDEDED;
+color : black;
+position:absolute;
+right : 0%;
+top : 23%;
+width : 25%;
+height : 30%;
+font-family : inherit;
+}
+
+.block5 {
+    text-align: center;
+    background-color: #FFFF;
+    border: 2px solid #CCD6D6 ;
+    top : 22%;
+    width : 24%;
+    height : 30%;
+    position : fixed left;
+    left : 0%;
+    box-shadow: 0px 0px 10px;
+}
+
+.block6{
+    text-align : left;
+    background-color: #EDEDED;
+  width : 73%;
+  height : 10%;
+position :absolute;
+    top : 70%;
+}
+
+.block7 {
+background-color: #DCE3D4;
+color : black;
+font-size: 20px;
+position : relative;
+top : 95%;
+height : 18%}
+
+#bottom1 a:hover{
+color : aliceblue;
+}
+
+#bottom1 {
+    float: left
+    
+}#bottom1 li {
+    display : block;
+    float : left
+}
+#bottom1 li a {
+    text-decoration: none;
+    color : black;
+}
+#bottom2 {float : both;
+}
+#bottom2 li {
+    display : inline-block;
+    float : right;
+    margin-right : 20%}
+#logo {height : 50px; width : 50px;}
+
+/*autre page */
+
+.container {
+    width: 100%;
+}
+
+.raquette{
+  display: block;
+  width: 90%;
+margin-left: auto;
+margin-right: auto;
+  position: absolute;
+}
+
+.bloc2{
+  margin-left: 55%;
+  margin-top: 10%;
+  position: absolute;
+  background-color: whitesmoke;
+  opacity : 0.8;
+}
+
+
+.logoconnexion {
+  width: 10%;
+  float: left;
+}
+
+.texteaccueil {
+    color : black;
+    text-align: center;
+}
+
+.blocId {
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+input[type="submit"]{
+ cursor:pointer;
+display: inline-block;
+  border-radius: 10px;
+  background-color : grey;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  padding: 0px;
+  width: 150px;
+  transition: all 0.5s;
+  margin: 0px;
+}
+
+/* on passe à la page d'acceuil en commencant par le tableau planning */
+
+.programmation {
+position : absolute;
+width : auto;
+height : auto;
+right : 50%;
+top : 95%
+
+}
+#tableau
+{
+border-collapse : collapse;
+text-align: center;
+margin : auto;
+}
+#entete {
+    border: 1px solid black;
+    font-size: 20px;
+}
+td
+{
+border: 1px solid black;
+}
+
+
+/*page admin */
+/* changement du bloc2 en 22 car sinon superposition.*/
+
+/*page actualité */
+
+.actudutournoi{
+text-align : left;
+background-color: #EDEDED;
+width : 73%;
+height : 90%;
+top : 11%;
+}
+
+.actutempsreel {
+background-color: #EDEDED;
+color : black;
+position:absolute;
+top : 11%;
+right : 0%;
+width : 25%;
+height : 30%;
+font-family : inherit;
+}
+
+/* page planning match */
+
+.programmation {
+position : absolute;
+right : 50%
+}
+#tableau2
+{
+border-collapse : collapse;
+text-align: center;
+margin : auto;
+}
+#entete {
+    border: 1px solid black;
+    font-size: 20px;
+    background-color: dimgrey;
+   color : white;
+}
+td
+{
+border: solid black;
+background-color :#CCD6D6 ;
+}
+
+
+
+
+
+
+
