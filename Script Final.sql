@@ -201,7 +201,7 @@ ADD CONSTRAINT `FK_REQUIPER` FOREIGN KEY (`equipeRamasseurs`) REFERENCES `equipe
 
 -- Procédures et triggers
 
---Trigger 1 - met à jour la table des ventes
+--  Trigger 1 - met à jour la table des ventes
 
 DELIMITER |
 CREATE TRIGGER after_commande AFTER INSERT
@@ -232,7 +232,7 @@ BEGIN
 
 END |
 
-
+/*
 DELIMITER | -- marche pas : empeche la quantite de passer à zéro
 CREATE TRIGGER suppr_match AFTER UPDATE
 ON billet FOR EACH ROW
@@ -243,9 +243,8 @@ BEGIN
 
      update `_match` set inactif= 1 where dateMatch < CURRENT_TIMESTAMP;
 
-
 END |
-
+*/
 
 
 
@@ -262,11 +261,11 @@ BEGIN
   where tbillet.libelletbillet ='licencie');
 
 	UPDATE client SET ESTLICENCIE="1" WHERE idclient=id;
-END
-| DELIMITER;
+END;
+| DELIMITER
 
 
---procédure 1 - met à jour le champ ESTLICENCIE si le client à passé une
+-- procédure 1 - met à jour le champ ESTLICENCIE si le client à passé une
 -- commande d'un billet licencié
 
 DELIMITER |
@@ -294,16 +293,10 @@ END;
 
 
 
-select client.idclient from commande inner join client
-on commande.idclient = client.IDCLIENT
-inner join tbillet on commande.idtbillet = tbillet.idtbillet
-where tbillet.libelletbillet ='licencie';
-
-
 -- Triggers
 
--- Vues
-
+-- Vues fonctionne pas encore
+/*
 CREATE VIEW detail_commande
 AS
 	SELECT _match.libelleMatch,_match.datematch, tbillet.libellebillet,emplacement.libelleemplacement,commande.idcommande,client.nom,client.prenom
@@ -313,9 +306,10 @@ AS
     INNER JOIN tbillet on tbillet.idtbillet=billet.idtbillet
     INNER JOIN commande on commande.idtbillet=tbillet.idtbillet
     INNER JOIN client on client.idclient= commande.idclient;
-
-
+*/
+/*
 --  Insertion des données de test
 
 INSERT INTO `ventes` (`idventes`, `montanttotal`, `paniermoyen`, `nbventes`, `mois`)
 VALUES ('1', '0', '0', '0', 'Janvier');
+*/
