@@ -26,13 +26,13 @@ SET time_zone = "+00:00";
 -- Structure de la table `billet`
 --
 CREATE TABLE `ventes` (
-  `idventes` INT AUTO_INCREMENT ,
-   `montanttotal` FLOAT NOT NULL ,
-    `paniermoyen` FLOAT NOT NULL ,
-     `nbventes` INT NOT NULL ,
-     `mois` VARCHAR(20) NOT NULL,
-     PRIMARY KEY(`idventes`)
-   ) ENGINE = InnoDB;
+  `idventes` TINYINT AUTO_INCREMENT ,
+  `montanttotal` FLOAT NOT NULL ,
+  `paniermoyen` FLOAT NOT NULL ,
+  `nbventes` MEDIUMINT NOT NULL ,
+  `mois` VARCHAR(20) NOT NULL,
+  PRIMARY KEY(`idventes`)
+) ENGINE = InnoDB;
 
 CREATE TABLE `client` (
   `IDCLIENT` int(11) NOT NULL AUTO_INCREMENT,
@@ -41,7 +41,7 @@ CREATE TABLE `client` (
   `MAILCLIENT` char(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `MDPCLIENT` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ESTLICENCIE` tinyint(1) DEFAULT NULL,
-  `NUMEROLICENCE` int(11) DEFAULT NULL,
+  `NUMEROLICENCE` VARCHAR(20) DEFAULT NULL,
   `TELCLIENT` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`idclient`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -58,11 +58,11 @@ CREATE TABLE `licence` (
 --
 
 CREATE TABLE `billet` (
-  `idbillet` int(11) NOT NULL AUTO_INCREMENT,
-  `idtbillet` int(11) NOT NULL,
+  `idbillet` MEDIUMINT NOT NULL AUTO_INCREMENT,
+  `idtbillet` TINYINT NOT NULL,
   `idmatch` int(11) NOT NULL,
-  `quantite` int(11) NOT NULL,
-  `libellebillet` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `quantite` SMALLINT NOT NULL,
+  `libellebillet` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
    PRIMARY KEY (`idbillet`)
 
 
@@ -71,7 +71,7 @@ CREATE TABLE `billet` (
 -- --------------------------------------------------------
 -- Structure de la table `tbillet`
 CREATE TABLE `tbillet` (
-  `idtbillet` int(11) NOT NULL AUTO_INCREMENT,
+  `idtbillet` TINYINT NOT NULL AUTO_INCREMENT,
   `prixtbillet` float NOT NULL,
   `libelletbillet` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
    PRIMARY KEY (`idtbillet`)
@@ -82,9 +82,9 @@ CREATE TABLE `tbillet` (
 CREATE TABLE `commande` (
 `idcommande` INT NOT NULL AUTO_INCREMENT ,
 `idclient` INT NOT NULL ,
-`idemplacement` INT NOT NULL ,
-`idtbillet` INT NOT NULL ,
-`idpromo`INT NOT NULL,
+`idemplacement` TINYINT NOT NULL ,
+`idtbillet` TINYINT NOT NULL ,
+`idpromo` MEDIUMINT NOT NULL,
 `montant` FLOAT NOT NULL,
  PRIMARY KEY (`idcommande`)) ENGINE = InnoDB;
 
@@ -95,7 +95,7 @@ CREATE TABLE `commande` (
 --
 
 CREATE TABLE `emplacement` (
-  `idemplacement` int(11) NOT NULL AUTO_INCREMENT,
+  `idemplacement` TINYINT NOT NULL AUTO_INCREMENT,
   `libelleemplacement` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `coeffemplacement` float NOT NULL,
    PRIMARY KEY (`idemplacement`)
@@ -108,7 +108,7 @@ CREATE TABLE `emplacement` (
 --
 
 CREATE TABLE `promo` (
-  `idpromo` int(11) NOT NULL AUTO_INCREMENT,
+  `idpromo` MEDIUMINT NOT NULL AUTO_INCREMENT,
   `libellepromo` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `coeffpromo` float NOT NULL,
    PRIMARY KEY (`idpromo`)
@@ -154,6 +154,25 @@ CREATE TABLE `ramasseurs` (
  CREATE TABLE `equipeR` (
  `equipeRamasseurs` TINYINT NOT NULL AUTO_INCREMENT , `libelleEquipeR` VARCHAR(50) NOT NULL , PRIMARY KEY (`equipeRamasseurs`)
  ) ENGINE = InnoDB;
+
+ CREATE TABLE `tennis`.`joueur` (
+ `idjoueur` SMALLINT NOT NULL AUTO_INCREMENT ,
+ `nomjoueur` VARCHAR(30) NOT NULL ,
+ `prenomjoueur` VARCHAR(30) NULL ,
+ `datenaissance` DATE NULL ,
+ `nationalite` VARCHAR(30) NOT NULL ,
+ `classementATP` VARCHAR(10) NULL ,
+  PRIMARY KEY (`idjoueur`)
+ ) ENGINE = InnoDB;
+
+ CREATE TABLE `tennis`.`score` (
+ `idmatch` INT NOT NULL ,
+ `idjoueur` SMALLINT NOT NULL ,
+ `numeroset` TINYINT NOT NULL ,
+ `nbjeux` TINYINT NOT NULL ,
+ PRIMARY KEY (`idmatch`, `idjoueur`, `numeroset`)
+ ) ENGINE = InnoDB;
+
 --
 -- Contraintes pour la partie billeterie
 --
@@ -198,6 +217,9 @@ ADD CONSTRAINT `FK_AEQUIPEA` FOREIGN KEY (`equipeArbitre`) REFERENCES `equipeA`(
 ALTER TABLE `ramasseurs` ADD `equipeRamasseurs` TINYINT NOT NULL AFTER `prenomRamasseur`,
 ADD CONSTRAINT `FK_REQUIPER` FOREIGN KEY (`equipeRamasseurs`) REFERENCES `equipeR`(`equipeRamasseurs`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+ALTER TABLE `score` ADD CONSTRAINT `fk_scorematch` FOREIGN KEY (`idmatch`) REFERENCES `_match`(`idmatch`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `score` ADD CONSTRAINT `fk_scorejoueur` FOREIGN KEY (`idjoueur`) REFERENCES `joueur`(`idjoueur`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- Procédures et triggers
 
