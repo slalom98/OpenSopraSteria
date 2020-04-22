@@ -43,8 +43,8 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
                                     <h6>Selectionner le type de match :</h6>
                                     <select name="typeMatch">
                                         <option value="Tournoi">Tournoi   </option>
-                                        <option value="TOinezifn">Tournoi </option>
-                                        <option value="F">WESH LES GARS DES BALISES CA SE FERME </option>
+                                        <option value="tournoi 2 ">Tournoi bis </option>
+                                        <option value="Tournois 3 ">Tournoi final </option>
                                     </select>
 
                                     <h6>Selectionner le tournoi (entraînement non concerné):</h6>

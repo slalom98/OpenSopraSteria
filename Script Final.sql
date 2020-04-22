@@ -318,17 +318,17 @@ END;
 -- Triggers
 
 -- Vues fonctionne pas encore
-/*
+
 CREATE VIEW detail_commande
 AS
-	SELECT _match.libelleMatch,_match.datematch, tbillet.libellebillet,emplacement.libelleemplacement,commande.idcommande,client.nom,client.prenom
-
+	SELECT _match.libelleMatch,_match.datematch, tbillet.libelletbillet,commande.idcommande,client.NOMCLIENT,client.PRENOMCLIENT,emplacement.libelleemplacement
     FROM _match
     INNER JOIN billet on _match.idmatch=billet.idmatch
     INNER JOIN tbillet on tbillet.idtbillet=billet.idtbillet
     INNER JOIN commande on commande.idtbillet=tbillet.idtbillet
     INNER JOIN client on client.idclient= commande.idclient;
-*/
+
+
 /*
 --  Insertion des données de test
 

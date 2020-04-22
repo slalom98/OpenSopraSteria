@@ -58,9 +58,6 @@ class Connection
                 echo '<body onLoad="alert(\'Mail non reconnu!\')">';
             }
 
-
-
-
 	}
 
 	public function inscription($nom,$prenom,$telephone,$mail,$pass1)
@@ -356,7 +353,7 @@ public function getlibellematch($idmatch){
 
         $resultat = $req->fetchAll(PDO::FETCH_ASSOC); // pour retourner sous forme de tableau associatif
 
-		      return $resultat;
+		    return $resultat;
 
 	}
 
@@ -385,6 +382,7 @@ public function getlibellematch($idmatch){
 
 
     }
+
     public function colonnedatebillet () {
       $sql = 'SELECT `idmatch`,`datematch`,`libellematch` FROM `_match` where inactif!=1  ';
      //INNER JOIN `billet` ON `billet`.`libellematch` = `_match`.`libellematch` ;
@@ -393,7 +391,7 @@ public function getlibellematch($idmatch){
        $resultat = $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
        return $resultat;
 
-       }
+      }
 
 public function verifpromo2($libellepromo)
     {
@@ -695,13 +693,13 @@ public function timelimit() {
 }
 
 public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$montant){
-
+          echo $idclient.$idemplacement.$idtbillet.$idpromo.$montant;
         $sql = 'INSERT INTO `commande`(`idclient`,`idemplacement`,`idtbillet`,`idpromo`,`montant`)
                 VALUES(:idclient,:idemplacement,:idtbillet,:idpromo,:montant)';
 
         $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $req ->execute(array(':idclient' => $idclient, ':idemplacement' => $idemplacement,
+        $req->execute(array(':idclient' => $idclient, ':idemplacement' => $idemplacement,
         ':idtbillet' => $idtbillet,':idpromo' => $idpromo,':montant' => $montant));
 
 
