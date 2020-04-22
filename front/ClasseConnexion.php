@@ -709,21 +709,23 @@ public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$mont
 // partie planning
 
 
-	public function ajoutMatch($libelleMatch,$dateMatch,$coefMatch,$courtMatch,$creneauMatch,$typeMatch,$tournoi,$equipeA,$equipeR1,$equipeR2) {
+	public function ajoutMatch($libelleMatch,$dateMatch,$coefMatch,$courtMatch,$creneauMatch,$typeMatch,$tournoi,$equipeA,$equipeR1,$equipeR2,$joueurA1,$joueurA2,$joueurB1,$joueurB2) {
 
-        $sql = 'INSERT INTO `_match`(`libelleMatch`,`dateMatch`,`coeffMatch`,`courtMatch`,`creneauMatch`,`typeMatch`,`tournoi`,`equipeA`,`equipeR1`,`equipeR2`)
-                VALUES(:libelleMatch,:dateMatch,:coefMatch,:courtMatch,:creneauMatch,:typeMatch,:tournoi,:equipeA,:equipeR1,:equipeR2)';
+        $sql = 'INSERT INTO `_match`(`libelleMatch`,`dateMatch`,`coeffMatch`,`courtMatch`,`creneauMatch`,`typeMatch`,`tournoi`,`equipeA`,`equipeR1`,`equipeR2`,`joueurA1`,`joueurA2`,`joueurB1`,`joueurB2`)
+                VALUES(:libelleMatch,:dateMatch,:coefMatch,:courtMatch,:creneauMatch,:typeMatch,:tournoi,:equipeA,:equipeR1,:equipeR2,:joueurA1,:joueurA2,:joueurB1,:joueurB2)';
 
 
 
         $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $req ->execute(array(':libelleMatch' => $libelleMatch, ':dateMatch' => $dateMatch,':coefMatch' => $coefMatch,':courtMatch' => $courtMatch,':creneauMatch' => $creneauMatch,':typeMatch' => $typeMatch,':tournoi' => $tournoi,':equipeA' => $equipeA,':equipeR1' => $equipeR1,':equipeR2' => $equipeR2));
+        $req ->execute(array(':libelleMatch' => $libelleMatch, ':dateMatch' => $dateMatch,':coefMatch' => $coefMatch,':courtMatch' => $courtMatch,':creneauMatch' => $creneauMatch,
+                             ':typeMatch' => $typeMatch,':tournoi' => $tournoi,':equipeA' => $equipeA,':equipeR1' => $equipeR1,':equipeR2' => $equipeR2,
+                             ':joueurA1' => $joueurA1,':joueurA2' => $joueurA2,':joueurB1' => $joueurB1,':joueurB2' => $joueurB2));
 
 
 
         echo '<body onLoad="alert(\'Match ajouté\')">';
-
+        echo '<meta http-equiv="refresh" content="0;URL=planning1.php">';
 
 
 	}
@@ -761,6 +763,21 @@ public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$mont
 
 	}
 
+  public function getJoueur() {
+
+
+        $sql = 'SELECT `joueur`.`idjoueur`,`joueur`.`nomjoueur`
+                FROM `joueur`';
+
+        $req = $this->_bdd->prepare($sql);
+
+        $req ->execute();
+
+        $resultat = $req->fetchAll();
+
+		return $resultat;
+
+	}
 
 	public function afficherMatch() {
 
