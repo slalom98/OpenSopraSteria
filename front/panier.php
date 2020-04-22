@@ -92,9 +92,7 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
                                       $idpromo=$_SESSION['idpromo'];
                                       $idtbillet=$maConnexionBD->getidtbillet($_SESSION['libelletbillet']);
 
-
                                       $maConnexionBD->ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$montant);
-                                      echo $idclient.$idemplacement.$idtbillet.$idpromo.$montant;
 
 
                                       $idbillet=$maConnexionBD->getBilletByMatch($_SESSION['idmatchcommande']);

@@ -148,6 +148,7 @@ class Connection
 
 	}
 
+/* ancienne version
 		public function ajoutMatch($dateM,$coeffM,$libelleM) {
 
             $sql = 'INSERT INTO `_match`(`dateMatch`,`coeffMatch`,`libelleMatch`)
@@ -160,7 +161,7 @@ class Connection
             echo '<body onLoad="alert(\'ajout OK ...\')">';
 
 
-	}
+	} */
 
 public function getlibellematch($idmatch){
     // prend un libelle en parametre, on peut pas mettre de POST dans le fichier classe connexion
@@ -693,7 +694,7 @@ public function timelimit() {
 }
 
 public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$montant){
-          echo $idclient.$idemplacement.$idtbillet.$idpromo.$montant;
+
         $sql = 'INSERT INTO `commande`(`idclient`,`idemplacement`,`idtbillet`,`idpromo`,`montant`)
                 VALUES(:idclient,:idemplacement,:idtbillet,:idpromo,:montant)';
 
@@ -704,6 +705,97 @@ public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$mont
 
 
 }
+
+// partie planning
+
+
+	public function ajoutMatch($libelleMatch,$dateMatch,$coefMatch,$courtMatch,$creneauMatch,$typeMatch,$tournoi,$equipeA,$equipeR1,$equipeR2) {
+
+        $sql = 'INSERT INTO `_match`(`libelleMatch`,`dateMatch`,`coeffMatch`,`courtMatch`,`creneauMatch`,`typeMatch`,`tournoi`,`equipeA`,`equipeR1`,`equipeR2`)
+                VALUES(:libelleMatch,:dateMatch,:coefMatch,:courtMatch,:creneauMatch,:typeMatch,:tournoi,:equipeA,:equipeR1,:equipeR2)';
+
+
+
+        $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $req ->execute(array(':libelleMatch' => $libelleMatch, ':dateMatch' => $dateMatch,':coefMatch' => $coefMatch,':courtMatch' => $courtMatch,':creneauMatch' => $creneauMatch,':typeMatch' => $typeMatch,':tournoi' => $tournoi,':equipeA' => $equipeA,':equipeR1' => $equipeR1,':equipeR2' => $equipeR2));
+
+
+
+        echo '<body onLoad="alert(\'Match ajouté\')">';
+
+
+
+	}
+
+
+	public function getArbitre() {
+
+
+        $sql = 'SELECT `equipeA`.`equipeArbitre`,`equipeA`.`libelleEquipeA`
+                FROM `equipeA`';
+
+        $req = $this->_bdd->prepare($sql);
+
+        $req ->execute();
+
+        $resultat = $req->fetchAll();
+
+		return $resultat;
+
+	}
+
+	public function getRamasseur() {
+
+
+        $sql = 'SELECT `equipeR`.`equipeRamasseurs`,`equipeR`.`libelleEquipeR`
+                FROM `equipeR`';
+
+        $req = $this->_bdd->prepare($sql);
+
+        $req ->execute();
+
+        $resultat = $req->fetchAll();
+
+		return $resultat;
+
+	}
+
+
+	public function afficherMatch() {
+
+    $sql = '
+             SELECT `idmatch`,`dateMatch`,`libelleMatch`,`creneauMatch`
+             FROM `_match`
+           ';
+
+    $req = $this->_bdd->prepare($sql);
+    $req->execute();
+    $resultat = $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
+    return $resultat;
+
+    }
+
+    public function ajoutJoueur($nom,$prenom,$daten,$pays,$atp){
+      try{
+        $sql = 'INSERT INTO `joueur` (`nomjoueur`,`prenomjoueur`,`datenaissance`,`nationalite`,`classementATP`)
+                VALUES(:nomjoueur,:prenomjoueur,:datenaissance,:nationalite,:classementATP)';
+
+        $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $req->execute(array(':nomjoueur'=>$nom,':prenomjoueur'=>$prenom,':datenaissance'=>$daten,
+        ':nationalite'=>$pays,':classementATP'=>$atp));
+
+        echo '<body onLoad="alert(\'Joueur ajouté.\')">';
+        echo '<meta http-equiv="refresh" content="0;URL=joueur.php">';
+
+      }
+      catch(Exception $e){
+        echo $e->getMessage();
+        die();
+      }
+    }
+
 
 }
 
