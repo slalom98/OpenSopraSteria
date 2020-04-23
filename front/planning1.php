@@ -73,7 +73,6 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
                                     <h6>Selectionner le tournoi (entraînement non concerné):</h6>
                                     <select name="tournoi">
                                         <option value=""></option>
-                                        <option value="Qualifications">Qualifications </option>
                                         <option value="Tournoi simple">Tournoi Simple </option>
                                         <option value="Tournoi double">Tournoi Double </option>
                                     </select>
