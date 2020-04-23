@@ -1035,6 +1035,83 @@ public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$mont
 
       return $resultat;
     }
+
+    public function getmatchsavenir() {
+     $sql = 'SELECT `idmatch`,`dateMatch`,`libelleMatch`,`creneauMatch` FROM `_match` WHERE `estjoue`=0 ORDER BY `datematch`';
+     $req = $this->_bdd->prepare($sql);
+     $req->execute();
+     $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
+     return $resultat;
+     }
+
+     public function getmatchsjoues() {
+      $sql = 'SELECT `idmatch`,`dateMatch`,`libelleMatch`,`creneauMatch`,`tournoi` FROM `_match` WHERE `estjoue`=1 ORDER BY `datematch`';
+      $req = $this->_bdd->prepare($sql);
+      $req->execute();
+      $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
+      return $resultat;
+      }
+
+      public function getJoueursSimple($idmatch){
+        $sql = 'SELECT `_match`.`idmatch`, `J1`.`nomjoueur`, `J2`.`nomjoueur`
+                FROM `_match` INNER JOIN `joueur` `J1` ON `J1`.`idjoueur`=`_match`.`joueurA1`
+                INNER JOIN `joueur` `J2` ON `J2`.`idjoueur`=`_match`.`joueurB1`
+                WHERE `_match`.`idmatch` = :idmatch';
+
+        $req = $this->_bdd->prepare($sql);
+        $req ->execute(array(':idmatch'=>$idmatch));
+        $resultat = $req->fetchAll();
+        return $resultat;
+      }
+
+      public function getEquipeA($idmatch){
+        $sql = 'SELECT `_match`.`idmatch`, `J1`.`nomjoueur`, `J2`.`nomjoueur`
+                FROM `_match` INNER JOIN `joueur` `J1` ON `J1`.`idjoueur`=`_match`.`joueurA1`
+                INNER JOIN `joueur` `J2` ON `J2`.`idjoueur`=`_match`.`joueurA2`
+                WHERE `_match`.`idmatch` = :idmatch';
+
+        $req = $this->_bdd->prepare($sql);
+        $req ->execute(array(':idmatch'=>$idmatch));
+        $resultat = $req->fetchAll();
+        return $resultat;
+      }
+
+      public function getEquipeB($idmatch){
+        $sql = 'SELECT `_match`.`idmatch`, `J1`.`nomjoueur`, `J2`.`nomjoueur`
+                FROM `_match` INNER JOIN `joueur` `J1` ON `J1`.`idjoueur`=`_match`.`joueurB1`
+                INNER JOIN `joueur` `J2` ON `J2`.`idjoueur`=`_match`.`joueurB2`
+                WHERE `_match`.`idmatch` = :idmatch';
+
+        $req = $this->_bdd->prepare($sql);
+        $req ->execute(array(':idmatch'=>$idmatch));
+        $resultat = $req->fetchAll();
+        return $resultat;
+      }
+
+      public function getscoreA($idmatch){
+        $sql = 'SELECT `score`.`idjoueur`,`score`.`numeroset`,`score`.`nbjeux`
+                FROM `score`
+                INNER JOIN `_match` ON `score`.`idmatch`=`_match`.`idmatch`
+                WHERE `score`.`idmatch`= :idmatch
+                AND `score`.`idjoueur` = `_match`.`joueurA1`';
+        $req = $this->_bdd->prepare($sql);
+        $req->execute(array(':idmatch'=>$idmatch));
+        $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $resultat;
+      }
+
+      public function getscoreB($idmatch){
+        $sql = 'SELECT `score`.`idjoueur`,`score`.`numeroset`,`score`.`nbjeux`
+                FROM `score`
+                INNER JOIN `_match` ON `score`.`idmatch`=`_match`.`idmatch`
+                WHERE `score`.`idmatch`= :idmatch
+                AND `score`.`idjoueur` = `_match`.`joueurB1`';
+        $req = $this->_bdd->prepare($sql);
+        $req->execute(array(':idmatch'=>$idmatch));
+        $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $resultat;
+      }
+
 }
 
  ?>
