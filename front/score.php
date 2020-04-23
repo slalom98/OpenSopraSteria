@@ -73,10 +73,16 @@ $co = new Connection();?>
                      if(isset($_GET["var1"])){
                          $idmatch=$_GET["var1"];
                          foreach ($tabE as $key => $value ) {
-                             if($value['idmatch']==$idmatch) {
+                             $estjoue = $maConnexionBD->getEstJoue($idmatch);
+                             if($value['idmatch']==$idmatch && $estjoue !=1) {
                                  echo  'Souhaitez-vous enregistrer le score
                                         relatif au match suivant : '.$value['libellematch'].' ?<br/>' ;
                                  echo '<input type="submit" value="confirmer" name="valider">';
+                             }
+                             else{
+                               if($value['idmatch']==$idmatch && $estjoue !=0){
+                                 echo 'Ce match a déjé été joué. Impossible de remplir les scores à nouveau';
+                               }
                              }
                          }
                      }
