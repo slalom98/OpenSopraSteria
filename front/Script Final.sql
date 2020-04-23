@@ -189,7 +189,6 @@ ALTER TABLE `commande`
 	ADD CONSTRAINT `fk_client` FOREIGN KEY (`idclient`)
 REFERENCES `client`(`idclient`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE `commande`
 ALTER TABLE `promo`
     ADD CONSTRAINT `fk_promo_tbillet` FOREIGN KEY (`idtbillet`)
 REFERENCES `tbillet`(`idtbillet`) ON DELETE CASCADE ON UPDATE CASCADE;
