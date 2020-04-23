@@ -6,11 +6,11 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Open Sopra Steria | Inscription </title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="design.css"/>
-    </head>
+<head>
+    <title>Open Sopra Steria | Inscription </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/design.css"/>
+</head>
 
     <body>
       <div class = "block3">
@@ -40,7 +40,8 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
 
         <?php
         $i=1;
-        $tabE= $maConnexionBD->colonnedatebillet ();
+        $tabE= $maConnexionBD->colonnedatebillet();
+    
         foreach ($tabE as $key => $value) {
        echo "<tr><TD>$value[datematch]<br></TD>";
        echo "<TD>$value[libellematch]<br></TD>";
