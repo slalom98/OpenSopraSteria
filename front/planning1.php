@@ -103,7 +103,7 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
                                        <select name="courtMatch">
                                            <option  value="Court central">Court central </option>
                                            <option value="Court 1">Court 1 </option>
-                                           <option value="Court2">Court 22 </option>
+                                           <option value="Court 2">Court 2 </option>
 
                                        </select>
 
@@ -113,21 +113,6 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
                                    </p>
 
                                 </form>
-
-                            <!--<?php
-                             /*if(isset($_POST['validerM']))
-                            	{
-                            	    $dateM = $_REQUEST['dateM'];
-                            	    $coeffM= $_REQUEST['coeffM'];
-                            	    $libelleM= $_REQUEST['libelleM'];
-
-
-                        	   	 //  $maConnexionBD->ajoutMatch($dateM,$coeffM,$libelleM);
-                        	   	    // fonction à faire
-
-                            	}*/
-                            ?>-->
-
 
                              </center>
                          </div>
@@ -142,11 +127,9 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
 
                  </div>
 
-                                  <div class = "bloc3">
+                 <div class = "bloc3">
                      <div class = "titres">
                          <h2  class = "texteaccueil">Visualiser planning match</h2>
-                     </div>
-
                     <?php
                        $tab= $maConnexionBD->afficherMatch();
                        foreach ($tab as $key => $value) {
@@ -157,7 +140,7 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
                         }
 
                     ?>
-
+                  </div>
                 </div>
 
 
