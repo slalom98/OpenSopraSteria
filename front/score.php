@@ -9,6 +9,16 @@ $co = new Connection();?>
         <link rel="stylesheet" href="../css/design.css">
     </head>
  <body>
+   <script type="text/javascript">
+   var param="";
+   var i=1;
+       function getSelected(sel) {
+            var idMatch = sel.options[sel.selectedIndex].value;
+            a=idMatch;
+             window.location.href ="score.php?var1="+a;
+       }
+
+   </script>
 
      <div class = "block1"> <!-- page d'accueil du site ! -->
      <h1>OPEN TOURNOI SOPRA STERIA</h1>
@@ -53,12 +63,12 @@ $co = new Connection();?>
 
              <div class = "inscription">
                <center>
-                 <form action ="score2.php" method="post">
+                 <form action ="score2.php" method="post" id="demoForm" class="demoForm">
                    <!-- Sélection du match -->
                    <h6>Sélectionner le match :</h6>
                    <select onChange="getSelected(this);" name="idmatch">
                      <?php
-                        $tab=$maConnexionBD->getMatchs();
+                        $tab=$co->getMatchs();
                         echo "<option value='' > " ;
                         foreach ($tab as $key => $value ) {
                              echo " <option value=".$value['idmatch']." > ";
@@ -72,11 +82,18 @@ $co = new Connection();?>
                    <?php
                      if(isset($_GET["var1"])){
                          $idmatch=$_GET["var1"];
-                         foreach ($tabE as $key => $value ) {
-                             if($value['idmatch']==$idmatch) {
+                         foreach ($tab as $key => $value ) {
+                             $estjoue = $co->getEstJoue($idmatch);
+                             if($value['idmatch']==$idmatch && $estjoue !=1) {
+                                 $_SESSION['idmatch'] = $idmatch;
                                  echo  'Souhaitez-vous enregistrer le score
-                                        relatif au match suivant : '.$value['libellematch'].' ?<br/>' ;
-                                 echo '<input type="submit" value="confirmer" name="valider">';
+                                        relatif au match suivant : '.$value['libellematch'].' ?<br/><br/>' ;
+                                 echo '<input type="submit" value="confirmer" name="validerM">';
+                             }
+                             else{
+                               if($value['idmatch']==$idmatch && $estjoue !=0){
+                                 echo 'Ce match a déja été joué. Impossible de remplir les scores à nouveau.';
+                               }
                              }
                          }
                      }

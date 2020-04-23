@@ -920,17 +920,95 @@ public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$mont
                     $Aset1,$Bset1,$Aset2,$Bset2,$Aset3,$Bset3){
       try{
 
-        //JoueurA1 SET 1
-        $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
-                VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+        //JoueurA1
+          //SET 1
+          $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                  VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+          $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+          $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurA1,':numeroset'=>1,':nbjeux'=>$Aset1));
+          //SET 2
+          $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                  VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+          $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+          $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurA1,':numeroset'=>2,':nbjeux'=>$Aset2));
+          //SET 3
+          $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                  VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+          $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+          $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurA1,':numeroset'=>3,':nbjeux'=>$Aset3));
+
+        //JoueurB1
+          //SET 1
+          $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                  VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+          $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+          $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurB1,':numeroset'=>1,':nbjeux'=>$Bset1));
+          //SET 2
+          $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                  VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+          $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+          $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurB1,':numeroset'=>2,':nbjeux'=>$Bset2));
+          //SET 3
+          $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                  VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+          $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+          $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurB1,':numeroset'=>3,':nbjeux'=>$Bset3));
+
+        //En cas de Double
+        $tournoi = null;
+        $sql = 'SELECT `_match`.`idmatch`,`_match`.`tournoi` FROM `_match` WHERE `_match`.`idmatch` = :idmatch';
+
+        $req = $this->_bdd->prepare($sql);
+        $req ->execute(array(':idmatch'=>$idmatch));
+        $restab = $req->fetchAll();
+        foreach ($restab as $key => $value){
+          if($value['idmatch']==$idmatch) {
+              $tournoi=$value['tournoi'];
+          }
+        }
+        if ($tournoi=='Tournoi double'){
+
+          //JoueurA2
+            //SET 1
+            $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                    VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+            $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurA2,':numeroset'=>1,':nbjeux'=>$Aset1));
+            //SET 2
+            $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                    VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+            $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurA2,':numeroset'=>2,':nbjeux'=>$Aset2));
+            //SET 3
+            $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                    VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+            $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurA2,':numeroset'=>3,':nbjeux'=>$Aset3));
+
+          //JoueurB2
+            //SET 1
+            $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                    VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+            $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurB2,':numeroset'=>1,':nbjeux'=>$Bset1));
+            //SET 2
+            $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                    VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+            $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurB2,':numeroset'=>2,':nbjeux'=>$Bset2));
+            //SET 3
+            $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                    VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+            $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$joueurB2,':numeroset'=>3,':nbjeux'=>$Bset3));
+        }
+
+        //Notification de confirmation du score
+        $sql = 'UPDATE `_match`
+                SET `_match`.`estjoue`=:valeur
+                WHERE `_match`.`idmatch`=:idmatch';
         $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-        $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$idjoueur,':numeroset'=>1,':nbjeux'=>$Aset1);
-
-
-
-
-
-
+        $req->execute(array(':valeur'=>1,':idmatch'=>$idmatch));
         echo '<body onLoad="alert(\'Le score pour ce match a bien été ajouté.\')">';
         echo '<meta http-equiv="refresh" content="0;URL=score.php">';
 
@@ -941,6 +1019,22 @@ public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$mont
       }
     }
 
+    public function getEstJoue($idmatch){
+      $resultat=null;
+
+      $sql = 'SELECT `_match`.`idmatch`,`_match`.`estjoue` FROM `_match` WHERE `_match`.`idmatch` = :idmatch';
+
+      $req = $this->_bdd->prepare($sql);
+      $req ->execute(array(':idmatch'=>$idmatch));
+      $restab = $req->fetchAll();
+      foreach ($restab as $key => $value){
+        if($value['idmatch']==$idmatch) {
+            $resultat=$value['estjoue'];
+        }
+      }
+
+      return $resultat;
+    }
 }
 
  ?>

@@ -43,7 +43,7 @@ $co = new Connection();?>
          </div>
          <!-- Récupération du match dans le formulaire, des joueurs dans la bd -->
          <?php
-            $idmatch=$_POST['idmatch'];
+            $idmatch=$_SESSION['idmatch'];
             if($idmatch!=null){
               $tournoi=$co->getTournoi($idmatch);
               if($tournoi=='Tournoi simple'){
@@ -180,10 +180,10 @@ $co = new Connection();?>
 
                    </table>
                    <br/>
-                   <input type="submit" value="Confirmer ce score" name="valider" />
+                   <input type="submit" value="Confirmer ce score" name="validerS" />
                    <br />
                    <?php //Récupération des scores par set des équipes, puis fonction
-                     if(isset($_POST['valider'])){
+                     if(isset($_POST['validerS'])){
                        $Aset1 = $_REQUEST['Aset1'];
                        $Bset1 = $_REQUEST['Bset1'];
                        $Aset2 = $_REQUEST['Aset2'];
