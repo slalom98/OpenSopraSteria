@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start();
+include_once("ClasseConnexion.php");
+$maConnexionBD = new Connection();?>
 <!doctype HMTL>
 <html >
 
@@ -27,15 +29,11 @@
                 if(isset($_SESSION['mail'])){
                     //echo '<a href = "moncompte.php"><button class="favorite styled" type="button"> Billeterie </button></a></input>';
                     echo '<form action="" method="post">';
-                    echo '<input class="favorite styled" type="submit" name="deco" value="Se deconnecter">';
+                    echo '<input class="favorite styled" type="submit" name="deco" value="Se déconnecter">';
                     echo '</form>';
                     	if(isset($_POST['deco']))
                     	{
-
-                    		 include_once("ClasseConnexion.php");
-                    		 $co = new Connection();
-                             $co->disconnect();
-
+                         $maConnexionBD->disconnect();
                     	}
                 }
                 else{

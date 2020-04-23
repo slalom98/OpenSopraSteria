@@ -709,21 +709,23 @@ public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$mont
 // partie planning
 
 
-	public function ajoutMatch($libelleMatch,$dateMatch,$coefMatch,$courtMatch,$creneauMatch,$typeMatch,$tournoi,$equipeA,$equipeR1,$equipeR2) {
+	public function ajoutMatch($libelleMatch,$dateMatch,$coefMatch,$courtMatch,$creneauMatch,$typeMatch,$tournoi,$equipeA,$equipeR1,$equipeR2,$joueurA1,$joueurA2,$joueurB1,$joueurB2) {
 
-        $sql = 'INSERT INTO `_match`(`libelleMatch`,`dateMatch`,`coeffMatch`,`courtMatch`,`creneauMatch`,`typeMatch`,`tournoi`,`equipeA`,`equipeR1`,`equipeR2`)
-                VALUES(:libelleMatch,:dateMatch,:coefMatch,:courtMatch,:creneauMatch,:typeMatch,:tournoi,:equipeA,:equipeR1,:equipeR2)';
+        $sql = 'INSERT INTO `_match`(`libelleMatch`,`dateMatch`,`coeffMatch`,`courtMatch`,`creneauMatch`,`typeMatch`,`tournoi`,`equipeA`,`equipeR1`,`equipeR2`,`joueurA1`,`joueurA2`,`joueurB1`,`joueurB2`)
+                VALUES(:libelleMatch,:dateMatch,:coefMatch,:courtMatch,:creneauMatch,:typeMatch,:tournoi,:equipeA,:equipeR1,:equipeR2,:joueurA1,:joueurA2,:joueurB1,:joueurB2)';
 
 
 
         $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $req ->execute(array(':libelleMatch' => $libelleMatch, ':dateMatch' => $dateMatch,':coefMatch' => $coefMatch,':courtMatch' => $courtMatch,':creneauMatch' => $creneauMatch,':typeMatch' => $typeMatch,':tournoi' => $tournoi,':equipeA' => $equipeA,':equipeR1' => $equipeR1,':equipeR2' => $equipeR2));
+        $req ->execute(array(':libelleMatch' => $libelleMatch, ':dateMatch' => $dateMatch,':coefMatch' => $coefMatch,':courtMatch' => $courtMatch,':creneauMatch' => $creneauMatch,
+                             ':typeMatch' => $typeMatch,':tournoi' => $tournoi,':equipeA' => $equipeA,':equipeR1' => $equipeR1,':equipeR2' => $equipeR2,
+                             ':joueurA1' => $joueurA1,':joueurA2' => $joueurA2,':joueurB1' => $joueurB1,':joueurB2' => $joueurB2));
 
 
 
         echo '<body onLoad="alert(\'Match ajouté\')">';
-
+        echo '<meta http-equiv="refresh" content="0;URL=planning1.php">';
 
 
 	}
@@ -761,6 +763,21 @@ public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$mont
 
 	}
 
+  public function getJoueur() {
+
+
+        $sql = 'SELECT `joueur`.`idjoueur`,`joueur`.`nomjoueur`
+                FROM `joueur`';
+
+        $req = $this->_bdd->prepare($sql);
+
+        $req ->execute();
+
+        $resultat = $req->fetchAll();
+
+		return $resultat;
+
+	}
 
 	public function afficherMatch() {
 
@@ -796,6 +813,133 @@ public function ajoutCommande($idclient,$idemplacement,$idtbillet,$idpromo,$mont
       }
     }
 
+    public function getTournoi($idmatch){
+      $resultat=null;
+
+      $sql = 'SELECT `_match`.`idmatch`,`_match`.`tournoi` FROM `_match` WHERE `_match`.`idmatch` = :idmatch';
+
+      $req = $this->_bdd->prepare($sql);
+      $req ->execute(array(':idmatch'=>$idmatch));
+      $restab = $req->fetchAll();
+      foreach ($restab as $key => $value){
+        if($value['idmatch']==$idmatch) {
+            $resultat=$value['tournoi'];
+        }
+      }
+
+      return $resultat;
+    }
+
+    public function getJoueurA1($idmatch){
+      $resultat=null;
+
+      $sql = 'SELECT `_match`.`idmatch`,`_match`.`joueurA1` FROM `_match` WHERE `_match`.`idmatch` = :idmatch';
+
+      $req = $this->_bdd->prepare($sql);
+      $req ->execute(array(':idmatch'=>$idmatch));
+      $restab = $req->fetchAll();
+      foreach ($restab as $key => $value){
+        if($value['idmatch']==$idmatch) {
+            $resultat=$value['joueurA1'];
+        }
+      }
+
+      return $resultat;
+    }
+
+    public function getJoueurA2($idmatch){
+      $resultat=null;
+
+      $sql = 'SELECT `_match`.`idmatch`,`_match`.`joueurA2` FROM `_match` WHERE `_match`.`idmatch` = :idmatch';
+
+      $req = $this->_bdd->prepare($sql);
+      $req ->execute(array(':idmatch'=>$idmatch));
+      $restab = $req->fetchAll();
+      foreach ($restab as $key => $value){
+        if($value['idmatch']==$idmatch) {
+            $resultat=$value['joueurA2'];
+        }
+      }
+
+      return $resultat;
+    }
+
+    public function getJoueurB1($idmatch){
+      $resultat=null;
+
+      $sql = 'SELECT `_match`.`idmatch`,`_match`.`joueurB1` FROM `_match` WHERE `_match`.`idmatch` = :idmatch';
+
+      $req = $this->_bdd->prepare($sql);
+      $req ->execute(array(':idmatch'=>$idmatch));
+      $restab = $req->fetchAll();
+      foreach ($restab as $key => $value){
+        if($value['idmatch']==$idmatch) {
+            $resultat=$value['joueurB1'];
+        }
+      }
+
+      return $resultat;
+    }
+
+    public function getJoueurB2($idmatch){
+      $resultat=null;
+
+      $sql = 'SELECT `_match`.`idmatch`,`_match`.`joueurB2` FROM `_match` WHERE `_match`.`idmatch` = :idmatch';
+
+      $req = $this->_bdd->prepare($sql);
+      $req ->execute(array(':idmatch'=>$idmatch));
+      $restab = $req->fetchAll();
+      foreach ($restab as $key => $value){
+        if($value['idmatch']==$idmatch) {
+            $resultat=$value['joueurB2'];
+        }
+      }
+
+      return $resultat;
+    }
+
+    public function getNomJoueur($j){
+
+      $resultat=null;
+
+      $sql = 'SELECT `joueur`.`idjoueur`,`joueur`.`nomjoueur` FROM `joueur` WHERE `joueur`.`idjoueur` LIKE :idjoueur ';
+
+      $req = $this->_bdd->prepare($sql);
+      $req ->execute(array(':idjoueur'=>$j));
+      $restab = $req->fetchAll();
+      foreach ($restab as $key => $value){
+        if($value['idjoueur']==$j) {
+            $resultat=$value['nomjoueur'];
+        }
+      }
+
+      return $resultat;
+    }
+
+    public function ajoutScore($idmatch,$joueurA1,$joueurB1,$joueurA2,$joueurB2,
+                    $Aset1,$Bset1,$Aset2,$Bset2,$Aset3,$Bset3){
+      try{
+
+        //JoueurA1 SET 1
+        $sql = 'INSERT INTO `score` (`idmatch`,`idjoueur`,`numeroset`,`nbjeux`)
+                VALUES(:idmatch,:idjoueur,:numeroset,:nbjeux)';
+        $req = $this->_bdd->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $req->execute(array(':idmatch'=>$idmatch,':idjoueur'=>$idjoueur,':numeroset'=>1,':nbjeux'=>$Aset1);
+
+
+
+
+
+
+        echo '<body onLoad="alert(\'Le score pour ce match a bien été ajouté.\')">';
+        echo '<meta http-equiv="refresh" content="0;URL=score.php">';
+
+      }
+      catch(Exception $e){
+        echo $e->getMessage();
+        die();
+      }
+    }
 
 }
 

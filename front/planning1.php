@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php session_start();
+include_once("ClasseConnexion.php");
+$maConnexionBD = new Connection(); // nouvelle connection BD
+?>
 <!doctype HMTL>
 <html >
 
@@ -64,16 +67,14 @@
                                     <h6>Selectionner le type de match :</h6>
                                     <select name="typeMatch">
                                         <option value="Tournoi">Tournoi   </option>
-                                        <option value="tournoi 2 ">Tournoi bis </option>
-                                        <option value="Tournois 3 ">Tournoi final </option>
+                                        <option value="Entrainement">Entrainement </option>
                                     </select>
 
                                     <h6>Selectionner le tournoi (entraînement non concerné):</h6>
                                     <select name="tournoi">
-
-                                        <option value="Qualif">Qualifications </option>
+                                        <option value=""></option>
                                         <option value="Tournoi simple">Tournoi Simple </option>
-                                        <option value="Tournoi Double">Tournoi Double </option>
+                                        <option value="Tournoi double">Tournoi Double </option>
                                     </select>
 
                                     <h6>Indiquer l'affiche du match :</h6>
@@ -101,7 +102,7 @@
                                        <select name="courtMatch">
                                            <option  value="Court central">Court central </option>
                                            <option value="Court 1">Court 1 </option>
-                                           <option value="Court2">Court 22 </option>
+                                           <option value="Court 2">Court 2 </option>
 
                                        </select>
 
@@ -111,21 +112,6 @@
                                    </p>
 
                                 </form>
-
-                            <!--<?php
-                             /*if(isset($_POST['validerM']))
-                            	{
-                            	    $dateM = $_REQUEST['dateM'];
-                            	    $coeffM= $_REQUEST['coeffM'];
-                            	    $libelleM= $_REQUEST['libelleM'];
-
-
-                        	   	 //  $maConnexionBD->ajoutMatch($dateM,$coeffM,$libelleM);
-                        	   	    // fonction à faire
-
-                            	}*/
-                            ?>-->
-
 
                              </center>
                          </div>
@@ -140,11 +126,9 @@
 
                  </div>
 
-                                  <div class = "bloc3">
+                 <div class = "bloc3">
                      <div class = "titres">
                          <h2  class = "texteaccueil">Visualiser planning match</h2>
-                     </div>
-
                     <?php
                        $tab= $maConnexionBD->afficherMatch();
                        foreach ($tab as $key => $value) {
@@ -155,7 +139,7 @@
                         }
 
                     ?>
-
+                  </div>
                 </div>
 
 
