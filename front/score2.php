@@ -45,18 +45,18 @@ $co = new Connection();?>
          <?php
             $idmatch=$_POST['idmatch'];
             if($idmatch!=null){
-              $tournoi=$co->getTournoi($idmatch); //à faire : récupérer si simple ou double
+              $tournoi=$co->getTournoi($idmatch);
               if($tournoi=='Tournoi simple'){
-                $joueurA1=$co->getJoueurA1($idmatch); //à faire : récupérer joueurA1
-                $joueurB1=$co->getJoueurB1($idmatch); //à faire : récupérer joueurB1
+                $joueurA1=$co->getJoueurA1($idmatch);
+                $joueurB1=$co->getJoueurB1($idmatch);
                 $joueurA2=null;
                 $joueurB2=null;
               }
               else {
-                $joueurA1=$co->getJoueurA1($idmatch); //à faire : récupérer joueurA1
-                $joueurB1=$co->getJoueurB1($idmatch); //à faire : récupérer joueurB1
-                $joueurA2=$co->getJoueurA2($idmatch); //à faire : récupérer joueurA2
-                $joueurB2=$co->getJoueurB2($idmatch); //à faire : récupérer joueurB2
+                $joueurA1=$co->getJoueurA1($idmatch);
+                $joueurB1=$co->getJoueurB1($idmatch);
+                $joueurA2=$co->getJoueurA2($idmatch);
+                $joueurB2=$co->getJoueurB2($idmatch);
               }
             }
             else{
@@ -84,10 +84,16 @@ $co = new Connection();?>
                          Equipe A<br/>
                          <?php
                             if($tournoi=='Tournoi simple'){
-                              echo $co->getNomJoueur($joueurA1);//à faire : fonction qui récupère le nom d'un joueur
+                              $j = $joueurA1;
+                              $repA1 = $co->getNomJoueur($j);
+                              echo $repA1;
                             }
                             else {
-                              echo $co->getNomJoueur($joueurA1)." et ".$co->getNomJoueur($joueurA2);
+                              $j = $joueurA1;
+                              $repA1 = $co->getNomJoueur($j);
+                              $j = $joueurA2;
+                              $repA2 = $co->getNomJoueur($j);
+                              echo $repA1." et ".$repA2;
                             }
                           ?>
                        </td>
@@ -96,10 +102,16 @@ $co = new Connection();?>
                          Equipe B<br/>
                          <?php
                             if($tournoi=='Tournoi simple'){
-                              echo $co->getNomJoueur($joueurB1);//à faire : fonction qui récupère le nom d'un joueur
+                              $j = $joueurB1;
+                              $repB1 = $co->getNomJoueur($j);
+                              echo $repB1;
                             }
                             else {
-                              echo $co->getNomJoueur($joueurB1)." et ".$co->getNomJoueur($joueurB2);
+                              $j = $joueurB1;
+                              $repB1 = $co->getNomJoueur($j);
+                              $j = $joueurB2;
+                              $repB2 = $co->getNomJoueur($j);
+                              echo $repB1." et ".$repB2;
                             }
                           ?>
                        </td>

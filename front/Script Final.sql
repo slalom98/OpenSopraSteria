@@ -134,6 +134,7 @@ CREATE TABLE `_match` (
  `typeMatch` VARCHAR(12),
  `tournoi` VARCHAR(20),
  `inactif` int(1),
+ `estjoue` BOOLEAN NOT NULL DEFAULT FALSE,
  PRIMARY KEY (`idMatch`)
  ) ENGINE = InnoDB;
 
