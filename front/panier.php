@@ -8,7 +8,7 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
     <head>
         <title>Open Sopra Steria | Inscription </title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="design.css"/>
+        <link rel="stylesheet" href="../css/design.css"/>
     </head>
 
     <body>
@@ -44,6 +44,7 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
 
 
                                      <?php
+
                                   $_SESSION['prixtbillet']=$maConnexionBD ->getprixtbillet($_SESSION['idtbillet']);
                                   echo"votre billet de base est au prix de : ".$_SESSION['prixtbillet']."€";
                                   echo"<br>";
@@ -58,7 +59,7 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
 
 
                                  $ajoutprixtotal = $_SESSION['prixtbillet']*$_SESSION['coefmatch']*$_SESSION['coeffemplacement'];
-                                 if ($_SESSION['libelletbillet']='Promo'){
+                                 if ($_SESSION['libelletbillet']=='promo'){
                                      $totalpromo =$_SESSION['prixtbillet']*$_SESSION['coeffpromo'];
 
                                  $prixtotal = $_SESSION['prixtbillet']+$ajoutprixtotal-$totalpromo;
