@@ -103,6 +103,9 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
                                       // récuperer idbillet
                                   ?>
 
+                                  <a href ="billet.php" >
+                                    <input type='button' value="Imprimer billet" name="pdf">
+                                   </a>
 
            </body>
            </html>
