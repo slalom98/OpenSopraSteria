@@ -10,7 +10,7 @@ $maConnexionBD = new Connection(); // nouvelle connection BD
     <head>
         <title>Open Sopra Steria | Inscription </title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="design.css"/>
+        <link rel="stylesheet" href="../css/design.css"/>
         <script type="text/javascript" src="script.js"></script>
     </head>
 

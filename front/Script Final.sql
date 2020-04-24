@@ -73,7 +73,7 @@ CREATE TABLE `billet` (
 CREATE TABLE `tbillet` (
   `idtbillet` TINYINT NOT NULL AUTO_INCREMENT,
   `prixtbillet` float NOT NULL,
-  `libelletbillet` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `libelletbillet` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
    PRIMARY KEY (`idtbillet`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -82,9 +82,8 @@ CREATE TABLE `tbillet` (
 CREATE TABLE `commande` (
 `idcommande` INT NOT NULL AUTO_INCREMENT ,
 `idclient` INT NOT NULL ,
-`idemplacement` TINYINT NOT NULL ,
-`idtbillet` TINYINT NOT NULL ,
-`idpromo` MEDIUMINT NOT NULL,
+`idemplacement` TINYINT NOT NULL,
+`idtbillet` TINYINT NOT NULL,
 `montant` FLOAT NOT NULL,
  PRIMARY KEY (`idcommande`)) ENGINE = InnoDB;
 
@@ -111,6 +110,7 @@ CREATE TABLE `promo` (
   `idpromo` MEDIUMINT NOT NULL AUTO_INCREMENT,
   `libellepromo` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `coeffpromo` float NOT NULL,
+  `idtbillet` TINYINT NOT NULL,
    PRIMARY KEY (`idpromo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -190,9 +190,9 @@ ALTER TABLE `commande`
 	ADD CONSTRAINT `fk_client` FOREIGN KEY (`idclient`)
 REFERENCES `client`(`idclient`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE `commande`
-    ADD CONSTRAINT `fk_promo`FOREIGN KEY (`idpromo`)
-REFERENCES `promo`(`idpromo`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `promo`
+    ADD CONSTRAINT `fk_promo_tbillet` FOREIGN KEY (`idtbillet`)
+REFERENCES `tbillet`(`idtbillet`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `billet`
 	ADD CONSTRAINT `fk_match` FOREIGN KEY (`idmatch`)
@@ -296,6 +296,55 @@ END;
 | DELIMITER
 
 
+
+
+
+-- Triggers
+
+-- Vues fonctionne pas encore
+/*
+CREATE VIEW detail_commande
+AS
+	SELECT _match.libelleMatch,_match.datematch, tbillet.libelletbillet,commande.idcommande,client.NOMCLIENT,client.PRENOMCLIENT,emplacement.libelleemplacement
+    FROM _match
+    INNER JOIN billet on _match.idmatch=billet.idmatch
+    INNER JOIN tbillet on tbillet.idtbillet=billet.idtbillet
+    INNER JOIN commande on commande.idtbillet=tbillet.idtbillet
+    INNER JOIN client on client.idclient= commande.idclient;
+*/
+
+
+--  Insertion des données de test
+INSERT INTO `equipea` (`equipeArbitre`, `libelleEquipeA`) VALUES (NULL, 'Equipe 1');
+
+INSERT INTO `equiper` (`equipeRamasseurs`, `libelleEquipeR`) VALUES (NULL, 'brascassés');
+INSERT INTO `equiper` (`equipeRamasseurs`, `libelleEquipeR`) VALUES (NULL, 'etudiants');
+
+INSERT INTO `ramasseurs` (`idRamasseur`, `nomRamasseur`, `prenomRamasseur`, `equipeRamasseurs`) VALUES (NULL, 'Magic', 'Jhonson', '1');
+INSERT INTO `ramasseurs` (`idRamasseur`, `nomRamasseur`, `prenomRamasseur`, `equipeRamasseurs`) VALUES (NULL, 'Kobe', 'Bryan', '1');
+
+INSERT INTO `_match` (`idmatch`, `libelleMatch`, `dateMatch`, `coeffMatch`, `courtMatch`, `creneauMatch`, `typeMatch`, `tournoi`,
+`equipeA`, `equipeR1`, `equipeR2`, `inactif`) VALUES (NULL, 'Match 1', '2020-06-25', '1.1', 'Central', '15h ', 'Qualif', 'Open', '1', '1', '2', 0);
+
+INSERT INTO `_match` (`idmatch`, `libelleMatch`, `dateMatch`, `coeffMatch`, `courtMatch`, `creneauMatch`, `typeMatch`, `tournoi`,
+`equipeA`, `equipeR1`, `equipeR2`, `inactif`) VALUES (NULL, 'Match 2', '2020-06-26', '1.2', 'Central', '15h ', 'Qualif', 'Open', '1', '1', '2', 0);
+
+INSERT INTO `tbillet` (`idtbillet`, `prixtbillet`, `libelletbillet`) VALUES (NULL, '50', 'promo');
+INSERT INTO `tbillet` (`idtbillet`, `prixtbillet`, `libelletbillet`) VALUES (NULL, '40', 'licencie');
+INSERT INTO `tbillet` (`idtbillet`, `prixtbillet`, `libelletbillet`) VALUES (NULL, '40', 'grand public');
+INSERT INTO `tbillet` (`idtbillet`, `prixtbillet`, `libelletbillet`) VALUES (NULL, '40', 'journée solidaritée');
+INSERT INTO `tbillet` (`idtbillet`, `prixtbillet`, `libelletbillet`) VALUES (NULL, '40', 'the big match');
+INSERT INTO `emplacement` (`idemplacement`, `libelleemplacement`, `coeffemplacement`) VALUES (NULL, 'Tribune', '0.95');
+INSERT INTO `promo` (`idpromo`, `libellepromo`, `coeffpromo`, `idtbillet`) VALUES (NULL, 'Etudiant', '0.9', '2');
+INSERT INTO `licence` (`idlicence`, `numlicencie`) VALUES (NULL, '10');
+INSERT INTO `billet` (`idbillet`, `idtbillet`, `idmatch`, `quantite`, `libellebillet`) VALUES (NULL, '2', '1', '5', 'Match1Promo');
+INSERT INTO `billet` (`idbillet`, `idtbillet`, `idmatch`, `quantite`, `libellebillet`) VALUES (NULL, '1', '1', '10', 'Match1 - licencié');
+INSERT INTO `billet` (`idbillet`, `idtbillet`, `idmatch`, `quantite`, `libellebillet`) VALUES (NULL, '2', '2', '6', 'MatchEfef-Promo');
+
+
+INSERT INTO `ventes` (`idventes`, `montanttotal`, `paniermoyen`, `nbventes`, `mois`)
+VALUES ('1', '0', '0', '0', 'Janvier');
+
 -- procédure 1 - met à jour le champ ESTLICENCIE si le client à passé une
 -- commande d'un billet licencié
 
@@ -321,26 +370,3 @@ CREATE PROCEDURE enr()
   END LOOP;
   CLOSE curseur;
 END;
-
-
-
--- Triggers
-
--- Vues fonctionne pas encore
-
-CREATE VIEW detail_commande
-AS
-	SELECT _match.libelleMatch,_match.datematch, tbillet.libelletbillet,commande.idcommande,client.NOMCLIENT,client.PRENOMCLIENT,emplacement.libelleemplacement
-    FROM _match
-    INNER JOIN billet on _match.idmatch=billet.idmatch
-    INNER JOIN tbillet on tbillet.idtbillet=billet.idtbillet
-    INNER JOIN commande on commande.idtbillet=tbillet.idtbillet
-    INNER JOIN client on client.idclient= commande.idclient;
-
-
-/*
---  Insertion des données de test
-
-INSERT INTO `ventes` (`idventes`, `montanttotal`, `paniermoyen`, `nbventes`, `mois`)
-VALUES ('1', '0', '0', '0', 'Janvier');
-*/
