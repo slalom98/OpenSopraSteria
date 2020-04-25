@@ -4,7 +4,7 @@
     <head>
         <title>Open Sopra Steria | Connexion </title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="design.css"/>
+        <link rel="stylesheet" href="../css/design.css"/>
     </head>
 
     <body>
@@ -50,34 +50,34 @@
 
                             <!--Si tout est bon, faire lien vers l'espace client-->
                         </form>
-                        
-                        <?php
-                        include_once("ClasseConnexion.php");  
 
-                         
+                        <?php
+                        include_once("ClasseConnexion.php");
+
+
                             try {
                                 $maConnexionBD = new Connection(); //nouvel objet connexion
-                               
+
                             	if(isset($_POST['co']))
                             	{
                             		$login = $_REQUEST['login'];
                             		$pass = $_REQUEST['pass'];
-                            		
-                            	   	$maConnexionBD->connexion($login,$pass); 
 
-                            		
+                            	   	$maConnexionBD->connexion($login,$pass);
+
+
                             	}
                             	else {
                             	    $_POST['co'] = NULL;
                             	}
                             }
                             catch (Exception $e) {
-                            
+
                             }
-                                
-                            
+
+
                         ?>
-                        
+
                         </center>
                     </div>
                 </div>
